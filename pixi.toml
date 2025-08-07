@@ -1,0 +1,18 @@
+[workspace]
+authors = ["igamenovoer <igamenovoer@xx.com>"]
+channels = ["conda-forge"]
+name = "genie3-survey"
+platforms = ["win-64"]
+version = "0.1.0"
+
+[tasks]
+capture-html = "python scripts/capture_html.py"
+install-browsers = "python -m playwright install chromium"
+
+[dependencies]
+python = ">=3.13.5,<3.14"
+playwright = ">=1.54.2,<2"
+pytest-playwright = ">=0.7.0,<0.8"
+
+[pypi-dependencies]
+markitdown = { version = ">=0.1.2, <0.2", extras = ["all"] }
