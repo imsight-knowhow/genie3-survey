@@ -52,6 +52,10 @@ Prior works by DeepMind related to Genie 3
 
 Directly related to Genie 3, where user can interact with a generated environment, shown as video.
 
+#### [Back to the Features: DINO as a Foundation for Video World Models](https://arxiv.org/abs/2507.19468)
+- **Venue**: arXiv, 2025
+- **Summary**: DINO-world presents a powerful generalist video world model trained to predict future frames in the latent space of DINOv2. By leveraging a pre-trained image encoder and training a future predictor on large-scale uncurated video datasets, DINO-world learns temporal dynamics of diverse scenes from driving to simulated environments. The model demonstrates strong performance on video prediction benchmarks and physics understanding, and can be fine-tuned for action-conditioned planning. This approach significantly reduces computational requirements compared to pixel-space models while maintaining effectiveness for world modeling tasks.
+
 #### [A Survey of Interactive Generative Video](https://arxiv.org/abs/2504.21853)
 - **Venue**: arXiv, 2025
 - **YouTube Demo**: [AI Video You Can Control: IGV Explained](https://www.youtube.com/watch?v=fXcBCVXVcqI)
