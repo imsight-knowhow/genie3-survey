@@ -68,7 +68,6 @@ Directly related to Genie 3, where user can interact with a generated environmen
 #### [AdaWorld: Learning Adaptable World Models with Latent Actions](https://arxiv.org/abs/2503.18938)
 - **Venue**: ICML, 2025
 - **Github Page**: [Little-Podi/AdaWorld](https://github.com/Little-Podi/AdaWorld)
-- **Tutorial**: [VLA之外，具身+VA工作汇总](https://zhuanlan.zhihu.com/p/1929904086733557886)
 - **Summary**: AdaWorld introduces a highly adaptable world model pretrained with continuous latent actions from thousands of environments. It enables zero-shot action transfer, fast adaptation, and new skill acquisition with minimal finetuning. The approach uses a latent action autoencoder to extract critical action information from videos and compress it into continuous latent actions, enabling more effective planning and controllable world model adaptation.
 
 #### [Learning Interactive Real-World Simulators (UniSim)](https://arxiv.org/abs/2310.06114)
