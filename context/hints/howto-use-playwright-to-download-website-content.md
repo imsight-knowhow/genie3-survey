@@ -158,3 +158,139 @@ const { URL } = require('url');
 ```
 
 This approach allows you to capture all images loaded by the page, whether they are in `<img>` tags, CSS backgrounds, or loaded dynamically by JavaScript.
+
+## 3. Download All Resources
+
+If you want to download all resources (like CSS, JavaScript, fonts, etc.) to create an offline version of the page, you can modify the response handler to save all resource types. This is similar to how a browser's "Save Page As..." feature works.
+
+You'll need to recreate the directory structure of the website to ensure that the saved HTML file can find its resources.
+
+### Python
+
+```python
+import asyncio
+import os
+from playwright.async_api import async_playwright
+from urllib.parse import urlparse
+
+async def main():
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        page = await browser.new_page()
+        
+        base_url = "https://playwright.dev/python"
+        parsed_base_url = urlparse(base_url)
+        output_dir = parsed_base_url.netloc
+
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        async def handle_response(response):
+            try:
+                # Get the URL path and create directories for it
+                url_path = urlparse(response.url).path
+                # a/b/c.js -> /output_dir/a/b/c.js
+                # /a/b/c.js -> /output_dir/a/b/c.js
+                # a/b/c/ -> /output_dir/a/b/c/index.html
+                
+                # remove leading slash
+                if url_path.startswith('/'):
+                    url_path = url_path[1:]
+
+                # if it's a directory, save as index.html
+                if url_path.endswith('/'):
+                    url_path += 'index.html'
+                
+                if not url_path:
+                    url_path = 'index.html'
+
+                filepath = os.path.join(output_dir, url_path)
+                dirname = os.path.dirname(filepath)
+
+                if not os.path.exists(dirname):
+                    os.makedirs(dirname)
+
+                # Save the resource
+                buffer = await response.body()
+                with open(filepath, "wb") as f:
+                    f.write(buffer)
+                print(f"Saved resource: {filepath}")
+
+            except Exception as e:
+                print(f"Could not save resource {response.url}: {e}")
+
+        page.on("response", handle_response)
+
+        await page.goto(base_url, wait_until="networkidle")
+        
+        # Get the main page content and save it
+        html = await page.content()
+        with open(os.path.join(output_dir, "index.html"), "w", encoding="utf-8") as f:
+            f.write(html)
+
+        await browser.close()
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+### JavaScript
+
+```javascript
+const { chromium } = require('playwright');
+const fs = require('fs');
+const path = require('path');
+const { URL } = require('url');
+
+(async () => {
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+
+  const baseUrl = 'https://playwright.dev/docs/intro';
+  const parsedBaseUrl = new URL(baseUrl);
+  const outputDir = parsedBaseUrl.hostname;
+
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+  }
+
+  page.on('response', async (response) => {
+    try {
+      const url = new URL(response.url());
+      let urlPath = url.pathname;
+
+      if (urlPath.startsWith('/')) {
+        urlPath = urlPath.substring(1);
+      }
+      
+      if (urlPath.endsWith('/')) {
+        urlPath += 'index.html';
+      }
+
+      if (!urlPath) {
+        urlPath = 'index.html';
+      }
+
+      const filepath = path.join(outputDir, urlPath);
+      const dirname = path.dirname(filepath);
+
+      if (!fs.existsSync(dirname)) {
+        fs.mkdirSync(dirname, { recursive: true });
+      }
+
+      const buffer = await response.body();
+      fs.writeFileSync(filepath, buffer);
+      console.log(`Saved resource: ${filepath}`);
+    } catch (e) {
+      console.error(`Could not save resource ${response.url()}: ${e}`);
+    }
+  });
+
+  await page.goto(baseUrl, { waitUntil: 'networkidle' });
+
+  const html = await page.content();
+  fs.writeFileSync(path.join(outputDir, 'index.html'), html, 'utf-8');
+
+  await browser.close();
+})();
+```

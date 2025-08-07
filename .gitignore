@@ -2,3 +2,6 @@
 # .magic-context/
 # pixi environments
 .pixi
+
+# Temporary files
+tmp/
