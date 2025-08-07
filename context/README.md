@@ -1,0 +1,1 @@
+this dir is for providing context info for AI assistants
