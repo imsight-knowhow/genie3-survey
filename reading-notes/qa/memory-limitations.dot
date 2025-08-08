@@ -1,0 +1,19 @@
+digraph MemoryLimitations {
+    rankdir=TD;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    subgraph cluster_limitations {
+        label="Current Limitations";
+        style=filled;
+        fillcolor="#ffebee";
+        
+        limited_context [label="Limited Context\nOnly 16 frames", fillcolor="#ffcdd2"];
+        memory_loss [label="Short-term Memory Loss\nForgets events >1.6 seconds ago", fillcolor="#ffcdd2"];
+        inconsistency [label="Inconsistency Issues\nObjects may change appearance", fillcolor="#ffcdd2"];
+        navigation [label="Navigation Problems\nCan't remember distant locations", fillcolor="#ffcdd2"];
+        
+        limited_context -> memory_loss;
+        memory_loss -> inconsistency;
+        inconsistency -> navigation;
+    }
+}

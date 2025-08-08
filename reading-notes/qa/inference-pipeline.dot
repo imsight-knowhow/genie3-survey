@@ -1,0 +1,17 @@
+digraph InferencePipeline {
+    rankdir=LR;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    prompt_image [label="Prompt Image\nx₁", fillcolor="#f0f0f0"];
+    tokenize [label="Tokenize\nz₁", fillcolor="#e1f5fe"];
+    user_action [label="User Action\na₁", fillcolor="#f0f0f0"];
+    dynamics_predict [label="Dynamics Model\nPredict z₂", fillcolor="#fff3e0"];
+    decode [label="Decode\nx₂", fillcolor="#e1f5fe"];
+    continue [label="Continue\nIteratively", fillcolor="#f0f0f0"];
+    
+    prompt_image -> tokenize;
+    tokenize -> user_action;
+    user_action -> dynamics_predict;
+    dynamics_predict -> decode;
+    decode -> continue;
+}

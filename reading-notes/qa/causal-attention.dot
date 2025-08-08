@@ -1,0 +1,26 @@
+digraph CausalAttention {
+    rankdir=TD;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    subgraph cluster_attention_matrix {
+        label="Attention Matrix (16×16 frames)";
+        style=filled;
+        fillcolor="#f9f9f9";
+        
+        frame1 [label="Frame 1", fillcolor="#e8f5e9"];
+        frame2 [label="Frame 2", fillcolor="#e1f5fe"];
+        frame3 [label="Frame 3", fillcolor="#f3e5f5"];
+        dots [label="...", shape=none, fillcolor=none];
+        previous_frames [label="Previous frames only", fillcolor="#f0f0f0"];
+        frame16 [label="Frame 16", fillcolor="#f0f0f0"];
+        
+        frame1 -> frame1;
+        frame2 -> frame1;
+        frame2 -> frame2;
+        frame3 -> frame1;
+        frame3 -> frame2;
+        frame3 -> frame3;
+        dots -> previous_frames;
+        frame16 -> previous_frames;
+    }
+}

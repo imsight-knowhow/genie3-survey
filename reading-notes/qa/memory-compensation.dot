@@ -1,0 +1,19 @@
+digraph MemoryCompensation {
+    rankdir=TD;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    subgraph cluster_compensation {
+        label="How Genie Compensates";
+        style=filled;
+        fillcolor="#e8f5e9";
+        
+        spatial_attention [label="Spatial Attention\nFocus on important objects", fillcolor="#c8e6c9"];
+        temporal_consistency [label="Temporal Consistency\nSmooth transitions between frames", fillcolor="#c8e6c9"];
+        action_conditioning [label="Action Conditioning\nActions provide context clues", fillcolor="#c8e6c9"];
+        learned_patterns [label="Learned Patterns\nUnderstands common game physics", fillcolor="#c8e6c9"];
+        
+        spatial_attention -> temporal_consistency;
+        temporal_consistency -> action_conditioning;
+        action_conditioning -> learned_patterns;
+    }
+}

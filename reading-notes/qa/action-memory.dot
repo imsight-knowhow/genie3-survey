@@ -1,0 +1,23 @@
+digraph ActionMemory {
+    rankdir=LR;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    subgraph cluster_action_effect {
+        label="Action-Effect Memory";
+        style=filled;
+        fillcolor="#f9f9f9";
+        
+        action3 [label="Action 3\n'Jump'", fillcolor="#f3e5f5"];
+        effect3 [label="Character moves up", fillcolor="#f0f0f0"];
+        
+        action1 [label="Action 1\n'Right'", fillcolor="#f3e5f5"];
+        effect1 [label="Character moves right", fillcolor="#f0f0f0"];
+        
+        action5 [label="Action 5\n'Wait'", fillcolor="#f3e5f5"];
+        effect5 [label="Character stays still", fillcolor="#f0f0f0"];
+        
+        action3 -> effect3;
+        action1 -> effect1;
+        action5 -> effect5;
+    }
+}

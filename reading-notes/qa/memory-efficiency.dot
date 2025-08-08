@@ -1,0 +1,11 @@
+digraph MemoryEfficiency {
+    rankdir=LR;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    raw_frame [label="Raw Frame\n160×90×3 = 43,200 values", fillcolor="#ffcdd2"];
+    compressed_tokens [label="Compressed Tokens\n40×23×1 = 920 tokens", fillcolor="#fff3e0"];
+    memory_savings [label="Memory Savings\n47× reduction", fillcolor="#c8e6c9"];
+    
+    raw_frame -> compressed_tokens;
+    compressed_tokens -> memory_savings;
+}

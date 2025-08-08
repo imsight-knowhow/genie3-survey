@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<memory>
+  <item id="mem_1754665354469_zj2p12hdo" time="2025/08/08 23:02">
+    <content>
+      **Genie: Generative Interactive Environments (2024) - Foundational Video World Model**
+    
+      ## Core Innovation
+      - First generative interactive environment trained unsupervised from unlabeled Internet videos
+      - 11B parameter foundation world model enabling frame-by-frame controllable video generation
+      - Trained on 200,000+ hours of Internet gaming videos without action or text annotations
+      - Creates playable environments from text, images, sketches, or photographs
+    
+      ## Architecture Components
+    
+      ### 1. Spatiotemporal (ST) Transformer
+      - Memory-efficient alternative to full attention - O(n) vs O(n²) scaling with frames
+      - Interleaved spatial and temporal attention layers
+      - Spatial layer: attends over H×W tokens within single frame
+      - Temporal layer: attends over T×1×1 tokens across time (causal masked)
+      - Single FFW after both spatial+temporal (not post-spatial FFW)
+    
+      ### 2. Video Tokenizer (ST-ViViT)
+      - VQ-VAE with ST-transformer encoder/decoder
+      - Compresses T×H×W×C → T×D discrete tokens
+      - Temporal-aware tokenization (vs spatial-only in prior work)
+      - Each token z_t contains info from all previous frames x_1:t
+      - 200M params, patch size 4, codebook 1024 codes
+    
+      ### 3. Latent Action Model (LAM)
+      - Learns 8 discrete latent actions unsupervised from video pairs
+      - Encoder: takes frames x_1:t + x_t+1 → continuous latent actions
+      - VQ-VAE objective with small vocabulary |A|=8 for human playability
+      - Decoder: reconstructs x_t+1 from history + latent action (training only)
+      - Actions must encode meaningful changes for successful reconstruction
+      - 300M params, patch size 16, 8-code action vocabulary
+    
+      ### 4. Dynamics Model
+      - Decoder-only MaskGIT transformer predicting next frame tokens
+      - Input: video tokens z_1:t-1 + stopgrad latent actions a_1:t-1
+      - Additive embeddings for actions (not concatenation)
+      - Random masking 0.5-1.0 during training
+      - 10.1B params in final model
+    
+      ## Training Strategy
+      **Two-phase training:**
+      1. Train video tokenizer independently
+      2. Co-train LAM (on pixels) + dynamics model (on tokens)
+    
+      ## Dataset Construction
+      - **Platformers Dataset**: 6.8M videos (30k hours) from 55M initial clips
+      - Keyword filtering for 2D platformer content
+      - Quality classifier (ResNet18) trained on 10k hand-labeled videos
+      - High-quality data &gt; quantity: 10% curated data outperforms full dataset
+      - **Robotics Dataset**: RT1 + simulation data (action-free treatment)
+    
+      ## Scaling Results
+      - Graceful scaling from 40M to 2.7B to 11B parameters
+      - Batch size scaling also beneficial (128→256→448→512)
+      - Final model: 942B training tokens, 256 TPUv5p
+    
+      ## Key Technical Insights
+      - **Pixel-input LAM &gt; Token-input LAM**: Raw pixels preserve motion dynamics lost in tokenization
+      - **ST-ViViT &gt; C-ViViT**: More efficient spatiotemporal encoding than full attention
+      - **Additive action embeddings**: Better controllability than concatenation
+      - **Consistent latent semantics**: Same action has consistent meaning across different inputs
+    
+      ## Emergent Capabilities
+      - **Out-of-distribution generalization**: Works on text-to-image outputs, sketches, real photos
+      - **Physics understanding**: Learns deformable objects, parallax effects
+      - **Cross-domain transfer**: Robotics model learns arm control and object interactions
+      - **Agent training**: LAM enables behavioral cloning in unseen RL environments
+    
+      ## Performance Metrics
+      - **Video fidelity**: Fréchet Video Distance (FVD)
+      - **Controllability**: Δ_t PSNR comparing ground-truth vs random action generations
+      - **Behavioral cloning**: Matches oracle performance with 200 expert samples
+    
+      ## Limitations &amp; Future Work
+      - Limited to 16 frames memory (1.6s at 10 FPS)
+      - ~1 FPS inference speed
+      - Autoregressive hallucination issues
+      - Potential for larger Internet video training
+    </content>
+    <tags>#其他</tags>
+  </item>
+</memory>

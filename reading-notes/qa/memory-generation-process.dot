@@ -1,0 +1,42 @@
+digraph MemoryGenerationProcess {
+    rankdir=TD;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    user [label="User", fillcolor="#e3f2fd"];
+    memory_buffer [label="Memory Buffer\n(16 frames)", fillcolor="#fff3e0"];
+    model [label="Genie Model", fillcolor="#f3e5f5"];
+    output [label="Generated Frame", fillcolor="#e8f5e8"];
+    
+    subgraph cluster_process {
+        label="Generation Process";
+        style=filled;
+        fillcolor="#f9f9f9";
+        
+        step1 [label="1. Provides initial frame", fillcolor="#f0f0f0"];
+        step2 [label="2. Takes action (e.g., 'move right')", fillcolor="#f0f0f0"];
+        step3 [label="3. Sends last 16 frames + action history", fillcolor="#f0f0f0"];
+        step4 [label="4. Processes spatial + temporal patterns", fillcolor="#f0f0f0"];
+        step5 [label="5. Generates next frame", fillcolor="#f0f0f0"];
+        step6 [label="6. New frame added to buffer", fillcolor="#f0f0f0"];
+        step7 [label="7. Oldest frame discarded if >16 frames", fillcolor="#f0f0f0"];
+        
+        step1 -> step2;
+        step2 -> step3;
+        step3 -> step4;
+        step4 -> step5;
+        step5 -> step6;
+        step6 -> step7;
+        step7 -> step2 [label="loop", style=dashed];
+    }
+    
+    user -> step1;
+    step1 -> memory_buffer;
+    user -> step2;
+    memory_buffer -> step3;
+    step3 -> model;
+    model -> step4;
+    step4 -> step5;
+    step5 -> output;
+    output -> step6;
+    step6 -> memory_buffer;
+}

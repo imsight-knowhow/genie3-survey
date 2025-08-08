@@ -1,0 +1,23 @@
+digraph VideoTokenizer {
+    rankdir=LR;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    subgraph cluster_tokenizer {
+        label="Video Tokenizer Architecture";
+        style=filled;
+        fillcolor="#f9f9f9";
+        
+        raw_video [label="Raw Video\nT×H×W×C", fillcolor="#fff3e0"];
+        encoder [label="ST-Transformer\nEncoder", fillcolor="#e8f5e9"];
+        quantization [label="VQ-VAE\nQuantization", fillcolor="#fff3e0"];
+        tokens [label="Discrete Tokens\nT×D", fillcolor="#f0f0f0"];
+        decoder [label="ST-Transformer\nDecoder", fillcolor="#e8f5e9"];
+        reconstructed [label="Reconstructed Video\nT×H×W×C", fillcolor="#f0f0f0"];
+        
+        raw_video -> encoder;
+        encoder -> quantization;
+        quantization -> tokens;
+        tokens -> decoder;
+        decoder -> reconstructed;
+    }
+}

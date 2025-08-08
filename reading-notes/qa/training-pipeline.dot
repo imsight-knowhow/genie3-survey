@@ -1,0 +1,32 @@
+digraph TrainingPipeline {
+    rankdir=TD;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    // Data source
+    internet_videos [label="Internet Videos\n30k hours", fillcolor="#f0f0f0"];
+    quality_filtering [label="Quality Filtering\n6.8M videos", fillcolor="#f0f0f0"];
+    
+    subgraph cluster_phase1 {
+        label="Phase 1";
+        style=filled;
+        fillcolor="#e8f5e9";
+        
+        tokenizer_training [label="Video Tokenizer", fillcolor="#e8f5e9"];
+        vqvae_loss [label="VQ-VAE Loss\nReconstruction", fillcolor="#c8e6c9"];
+    }
+    
+    subgraph cluster_phase2 {
+        label="Phase 2: Joint Training";
+        style=filled;
+        fillcolor="#fff3e0";
+        
+        lam_loss [label="LAM Loss\nAction Prediction", fillcolor="#ffcc02"];
+        dynamics_loss [label="Dynamics Loss\nNext Token Prediction", fillcolor="#ffcc02"];
+    }
+    
+    internet_videos -> quality_filtering;
+    quality_filtering -> tokenizer_training;
+    quality_filtering -> lam_loss;
+    quality_filtering -> dynamics_loss;
+    tokenizer_training -> vqvae_loss;
+}

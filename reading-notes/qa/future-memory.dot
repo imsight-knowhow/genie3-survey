@@ -1,0 +1,16 @@
+digraph FutureMemory {
+    rankdir=LR;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    current [label="Current: 16 frames", fillcolor="#ffcdd2"];
+    future [label="Future: Hierarchical Memory", fillcolor="#fff3e0"];
+    
+    short_term [label="Short-term: 16 frames\ndetailed motion", fillcolor="#c8e6c9"];
+    long_term [label="Long-term: Compressed\nscene representation", fillcolor="#c8e6c9"];
+    episodic [label="Episodic: Key events\nimportant moments", fillcolor="#c8e6c9"];
+    
+    current -> future;
+    future -> short_term;
+    future -> long_term;
+    future -> episodic;
+}

@@ -1,0 +1,22 @@
+digraph DynamicsModel {
+    rankdir=LR;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    subgraph cluster_dynamics {
+        label="Dynamics Model (MaskGIT)";
+        style=filled;
+        fillcolor="#f9f9f9";
+        
+        video_tokens [label="Video Tokens\nz₁:ₜ₋₁", fillcolor="#f0f0f0"];
+        latent_actions [label="Latent Actions\nã₁:ₜ₋₁", fillcolor="#f0f0f0"];
+        
+        st_transformer [label="ST-Transformer\nDecoder-only", fillcolor="#fff3e0"];
+        masked_prediction [label="Masked Prediction", fillcolor="#fce4ec"];
+        next_tokens [label="Next Frame Tokens\nẑₜ", fillcolor="#f0f0f0"];
+        
+        video_tokens -> st_transformer;
+        latent_actions -> st_transformer;
+        st_transformer -> masked_prediction;
+        masked_prediction -> next_tokens;
+    }
+}

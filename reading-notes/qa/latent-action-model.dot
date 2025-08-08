@@ -1,0 +1,36 @@
+digraph LatentActionModel {
+    rankdir=TD;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    subgraph cluster_lam {
+        label="Latent Action Model Training";
+        style=filled;
+        fillcolor="#f9f9f9";
+        
+        prev_frames [label="Previous Frames\nx₁:ₜ", fillcolor="#f0f0f0"];
+        next_frame [label="Next Frame\nxₜ₊₁", fillcolor="#f0f0f0"];
+        encoder [label="ST-Transformer\nEncoder", fillcolor="#f3e5f5"];
+        
+        continuous_actions [label="Continuous Actions\nã₁:ₜ", fillcolor="#f0f0f0"];
+        vq_quantization [label="VQ Quantization\n|A|=8 actions", fillcolor="#ffebee"];
+        discrete_actions [label="Discrete Actions\na₁:ₜ", fillcolor="#f0f0f0"];
+        
+        decoder [label="ST-Transformer\nDecoder", fillcolor="#f3e5f5"];
+        reconstructed_frame [label="Reconstructed Frame\nx̂ₜ₊₁", fillcolor="#f0f0f0"];
+        
+        loss [label="Reconstruction Loss", fillcolor="#ffcdd2", shape=ellipse];
+        
+        prev_frames -> encoder;
+        next_frame -> encoder;
+        encoder -> continuous_actions;
+        continuous_actions -> vq_quantization;
+        vq_quantization -> discrete_actions;
+        
+        prev_frames -> decoder;
+        discrete_actions -> decoder;
+        decoder -> reconstructed_frame;
+        
+        next_frame -> loss [style=dashed];
+        reconstructed_frame -> loss [style=dashed];
+    }
+}

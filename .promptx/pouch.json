@@ -1,22 +1,63 @@
 {
-  "currentState": "service_discovery",
+  "currentState": "memory_saved",
   "stateHistory": [
     {
       "from": "initial",
       "command": "init",
-      "timestamp": "2025-08-07T02:57:48.697Z",
+      "timestamp": "2025-08-08T14:55:24.420Z",
       "args": [
         {
-          "workingDirectory": "d:\\code\\genie3-survey"
+          "workingDirectory": "d:\\code\\genie3-survey",
+          "ideType": "vscode"
         }
       ]
     },
     {
       "from": "initialized",
-      "command": "welcome",
-      "timestamp": "2025-08-07T02:57:55.483Z",
-      "args": []
+      "command": "action",
+      "timestamp": "2025-08-08T14:58:27.968Z",
+      "args": [
+        "nuwa"
+      ]
+    },
+    {
+      "from": "role_activated_with_memory",
+      "command": "action",
+      "timestamp": "2025-08-08T15:01:08.511Z",
+      "args": [
+        "prof-gen"
+      ]
+    },
+    {
+      "from": "role_activated_with_memory",
+      "command": "init",
+      "timestamp": "2025-08-08T15:01:14.477Z",
+      "args": [
+        {
+          "workingDirectory": "d:\\code\\genie3-survey",
+          "ideType": "vscode"
+        }
+      ]
+    },
+    {
+      "from": "initialized",
+      "command": "action",
+      "timestamp": "2025-08-08T15:01:18.746Z",
+      "args": [
+        "prof-gen"
+      ]
+    },
+    {
+      "from": "role_activated_with_memory",
+      "command": "remember",
+      "timestamp": "2025-08-08T15:02:34.461Z",
+      "args": [
+        "prof-gen",
+        "**Genie: Generative Interactive Environments (2024) - Foundational Video World Model**\n\n## Core Innovation\n- First generative interactive environment trained unsupervised from unlabeled Internet videos\n- 11B parameter foundation world model enabling frame-by-frame controllable video generation\n- Trained on 200,000+ hours of Internet gaming videos without action or text annotations\n- Creates playable environments from text, images, sketches, or photographs\n\n## Architecture Components\n\n### 1. Spatiotemporal (ST) Transformer\n- Memory-efficient alternative to full attention - O(n) vs O(n²) scaling with frames\n- Interleaved spatial and temporal attention layers\n- Spatial layer: attends over H×W tokens within single frame\n- Temporal layer: attends over T×1×1 tokens across time (causal masked)\n- Single FFW after both spatial+temporal (not post-spatial FFW)\n\n### 2. Video Tokenizer (ST-ViViT)\n- VQ-VAE with ST-transformer encoder/decoder\n- Compresses T×H×W×C → T×D discrete tokens\n- Temporal-aware tokenization (vs spatial-only in prior work)\n- Each token z_t contains info from all previous frames x_1:t\n- 200M params, patch size 4, codebook 1024 codes\n\n### 3. Latent Action Model (LAM)\n- Learns 8 discrete latent actions unsupervised from video pairs\n- Encoder: takes frames x_1:t + x_t+1 → continuous latent actions\n- VQ-VAE objective with small vocabulary |A|=8 for human playability\n- Decoder: reconstructs x_t+1 from history + latent action (training only)\n- Actions must encode meaningful changes for successful reconstruction\n- 300M params, patch size 16, 8-code action vocabulary\n\n### 4. Dynamics Model\n- Decoder-only MaskGIT transformer predicting next frame tokens\n- Input: video tokens z_1:t-1 + stopgrad latent actions a_1:t-1\n- Additive embeddings for actions (not concatenation)\n- Random masking 0.5-1.0 during training\n- 10.1B params in final model\n\n## Training Strategy\n**Two-phase training:**\n1. Train video tokenizer independently\n2. Co-train LAM (on pixels) + dynamics model (on tokens)\n\n## Dataset Construction\n- **Platformers Dataset**: 6.8M videos (30k hours) from 55M initial clips\n- Keyword filtering for 2D platformer content\n- Quality classifier (ResNet18) trained on 10k hand-labeled videos\n- High-quality data > quantity: 10% curated data outperforms full dataset\n- **Robotics Dataset**: RT1 + simulation data (action-free treatment)\n\n## Scaling Results\n- Graceful scaling from 40M to 2.7B to 11B parameters\n- Batch size scaling also beneficial (128→256→448→512)\n- Final model: 942B training tokens, 256 TPUv5p\n\n## Key Technical Insights\n- **Pixel-input LAM > Token-input LAM**: Raw pixels preserve motion dynamics lost in tokenization\n- **ST-ViViT > C-ViViT**: More efficient spatiotemporal encoding than full attention\n- **Additive action embeddings**: Better controllability than concatenation\n- **Consistent latent semantics**: Same action has consistent meaning across different inputs\n\n## Emergent Capabilities\n- **Out-of-distribution generalization**: Works on text-to-image outputs, sketches, real photos\n- **Physics understanding**: Learns deformable objects, parallax effects\n- **Cross-domain transfer**: Robotics model learns arm control and object interactions\n- **Agent training**: LAM enables behavioral cloning in unseen RL environments\n\n## Performance Metrics\n- **Video fidelity**: Fréchet Video Distance (FVD)\n- **Controllability**: Δ_t PSNR comparing ground-truth vs random action generations\n- **Behavioral cloning**: Matches oracle performance with 200 expert samples\n\n## Limitations & Future Work\n- Limited to 16 frames memory (1.6s at 10 FPS)\n- ~1 FPS inference speed\n- Autoregressive hallucination issues\n- Potential for larger Internet video training",
+        "--tags",
+        "genie world-model video-generation spatiotemporal-transformer latent-actions unsupervised-learning foundation-model interactive-environments"
+      ]
     }
   ],
-  "lastUpdated": "2025-08-07T02:57:55.781Z"
+  "lastUpdated": "2025-08-08T15:02:34.473Z"
 }

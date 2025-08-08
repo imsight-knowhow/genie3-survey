@@ -1,0 +1,30 @@
+digraph STTransformer {
+    rankdir=TD;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    subgraph cluster_st_block {
+        label="ST-Transformer Block";
+        style=filled;
+        fillcolor="#f9f9f9";
+        
+        input_tokens [label="Input Tokens\nT×H×W", fillcolor="#f0f0f0"];
+        spatial_attention [label="Spatial Attention\nwithin each frame", fillcolor="#e8f5e9"];
+        temporal_attention [label="Temporal Attention\nacross time steps", fillcolor="#e1f5fe"];
+        feed_forward [label="Feed Forward\nNetwork", fillcolor="#fff3e0"];
+        output_tokens [label="Output Tokens\nT×H×W", fillcolor="#f0f0f0"];
+        
+        input_tokens -> spatial_attention;
+        spatial_attention -> temporal_attention;
+        temporal_attention -> feed_forward;
+        feed_forward -> output_tokens;
+    }
+    
+    subgraph cluster_attention_patterns {
+        label="Attention Patterns";
+        style=filled;
+        fillcolor="#f5f5f5";
+        
+        spatial_pattern [label="Spatial: H×W tokens\nper timestep", fillcolor="#e8f5e9"];
+        temporal_pattern [label="Temporal: T×1×1 tokens\nacross time", fillcolor="#e1f5fe"];
+    }
+}

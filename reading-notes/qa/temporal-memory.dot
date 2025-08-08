@@ -1,0 +1,29 @@
+digraph TemporalMemory {
+    rankdir=TD;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    subgraph cluster_temporal {
+        label="Temporal Memory Pattern";
+        style=filled;
+        fillcolor="#f9f9f9";
+        
+        t3 [label="t-3: Character jumping", fillcolor="#ffcdd2"];
+        t2 [label="t-2: Character in air", fillcolor="#f8bbd9"];
+        t1 [label="t-1: Character falling", fillcolor="#e1bee7"];
+        t [label="t: Character landing", fillcolor="#c5cae9"];
+        
+        motion_vector [label="Motion Vector\nJump → Air → Fall → Land", fillcolor="#f0f0f0"];
+        predicted_state [label="Predicted Next State\nCharacter walking", fillcolor="#c8e6c9"];
+        
+        t3 -> t2;
+        t2 -> t1;
+        t1 -> t;
+        
+        t3 -> motion_vector [style=dashed];
+        t2 -> motion_vector [style=dashed];
+        t1 -> motion_vector [style=dashed];
+        t -> motion_vector [style=dashed];
+        
+        motion_vector -> predicted_state;
+    }
+}

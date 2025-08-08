@@ -1,0 +1,32 @@
+digraph GenieArchitecture {
+    rankdir=TD;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    // Input
+    input [label="Input Video Frames\nx₁, x₂, ..., xₜ", fillcolor="#f0f0f0"];
+    
+    // Main components
+    tokenizer [label="Video Tokenizer\nST-ViViT", fillcolor="#e1f5fe"];
+    lam [label="Latent Action Model\nLAM", fillcolor="#f3e5f5"];
+    dynamics [label="Dynamics Model\nMaskGIT Transformer", fillcolor="#fff3e0"];
+    
+    // Intermediate outputs
+    tokens [label="Discrete Video Tokens\nz₁, z₂, ..., zₜ", fillcolor="#f0f0f0"];
+    actions [label="Latent Actions\nã₁, ã₂, ..., ãₜ₋₁", fillcolor="#f0f0f0"];
+    
+    // Final outputs
+    next_tokens [label="Next Frame Tokens\nẑₜ₊₁", fillcolor="#f0f0f0"];
+    decoder [label="Video Decoder\nST-ViViT", fillcolor="#e1f5fe"];
+    output [label="Generated Frame\nx̂ₜ₊₁", fillcolor="#f0f0f0"];
+    
+    // Connections
+    input -> tokenizer;
+    input -> lam;
+    tokenizer -> tokens;
+    lam -> actions;
+    tokens -> dynamics;
+    actions -> dynamics;
+    dynamics -> next_tokens;
+    next_tokens -> decoder;
+    decoder -> output;
+}

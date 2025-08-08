@@ -1,0 +1,17 @@
+digraph SpatialMemory {
+    rankdir=LR;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    subgraph cluster_spatial {
+        label="Single Frame Memory";
+        style=filled;
+        fillcolor="#f9f9f9";
+        
+        raw_frame [label="Raw Frame\n160×90 pixels", fillcolor="#fff3e0"];
+        spatial_tokens [label="Spatial Tokens\n40×23 patches", fillcolor="#e8f5e9"];
+        object_locations [label="Object Locations\nCharacter, Platforms, Items", fillcolor="#c8e6c9"];
+        
+        raw_frame -> spatial_tokens;
+        spatial_tokens -> object_locations;
+    }
+}

@@ -4,14 +4,63 @@
   "metadata": {
     "version": "2.0.0",
     "description": "project 级资源注册表",
-    "createdAt": "2025-08-07T02:57:48.743Z",
-    "updatedAt": "2025-08-07T02:57:48.744Z",
-    "resourceCount": 0
+    "createdAt": "2025-08-08T15:01:14.482Z",
+    "updatedAt": "2025-08-08T15:01:14.487Z",
+    "resourceCount": 3
   },
-  "resources": [],
+  "resources": [
+    {
+      "id": "academic-research-workflow",
+      "source": "project",
+      "protocol": "execution",
+      "name": "Academic Research Workflow 执行模式",
+      "description": "执行模式，定义具体的行为模式",
+      "reference": "@project://.promptx/resource/role/prof-gen/execution/academic-research-workflow.execution.md",
+      "metadata": {
+        "createdAt": "2025-08-08T15:01:14.484Z",
+        "updatedAt": "2025-08-08T15:01:14.484Z",
+        "scannedAt": "2025-08-08T15:01:14.484Z",
+        "path": "role/prof-gen/execution/academic-research-workflow.execution.md"
+      }
+    },
+    {
+      "id": "prof-gen",
+      "source": "project",
+      "protocol": "role",
+      "name": "Prof Gen 角色",
+      "description": "专业角色，提供特定领域的专业能力",
+      "reference": "@project://.promptx/resource/role/prof-gen/prof-gen.role.md",
+      "metadata": {
+        "createdAt": "2025-08-08T15:01:14.486Z",
+        "updatedAt": "2025-08-08T15:01:14.486Z",
+        "scannedAt": "2025-08-08T15:01:14.486Z",
+        "path": "role/prof-gen/prof-gen.role.md"
+      }
+    },
+    {
+      "id": "academic-thinking",
+      "source": "project",
+      "protocol": "thought",
+      "name": "Academic Thinking 思维模式",
+      "description": "思维模式，指导AI的思考方式",
+      "reference": "@project://.promptx/resource/role/prof-gen/thought/academic-thinking.thought.md",
+      "metadata": {
+        "createdAt": "2025-08-08T15:01:14.487Z",
+        "updatedAt": "2025-08-08T15:01:14.487Z",
+        "scannedAt": "2025-08-08T15:01:14.487Z",
+        "path": "role/prof-gen/thought/academic-thinking.thought.md"
+      }
+    }
+  ],
   "stats": {
-    "totalResources": 0,
-    "byProtocol": {},
-    "bySource": {}
+    "totalResources": 3,
+    "byProtocol": {
+      "execution": 1,
+      "role": 1,
+      "thought": 1
+    },
+    "bySource": {
+      "project": 3
+    }
   }
 }

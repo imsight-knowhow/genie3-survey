@@ -1,0 +1,36 @@
+digraph MemoryArchitecture {
+    rankdir=TD;
+    node [shape=box, style=filled, fontname="Arial"];
+    
+    subgraph cluster_memory_window {
+        label="Memory Window (16 frames)";
+        style=filled;
+        fillcolor="#f9f9f9";
+        
+        frame_t15 [label="Frame t-15", fillcolor="#f0f0f0"];
+        frame_t14 [label="Frame t-14", fillcolor="#f0f0f0"];
+        dots1 [label="...", shape=none, fillcolor=none];
+        frame_t1 [label="Frame t-1", fillcolor="#f0f0f0"];
+        frame_t [label="Frame t\nCurrent", fillcolor="#ffeb3b"];
+        
+        frame_t15 -> frame_t14;
+        frame_t14 -> dots1;
+        dots1 -> frame_t1;
+        frame_t1 -> frame_t;
+    }
+    
+    subgraph cluster_memory_processing {
+        label="Memory Processing";
+        style=filled;
+        fillcolor="#f5f5f5";
+        
+        spatial_memory [label="Spatial Memory\nWhat's in each frame", fillcolor="#e8f5e9"];
+        temporal_memory [label="Temporal Memory\nHow things change over time", fillcolor="#e1f5fe"];
+        action_memory [label="Action Memory\nWhat actions caused changes", fillcolor="#f3e5f5"];
+        
+        spatial_memory -> temporal_memory;
+        temporal_memory -> action_memory;
+    }
+    
+    frame_t -> spatial_memory;
+}
