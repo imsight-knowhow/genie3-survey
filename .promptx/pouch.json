@@ -4,7 +4,7 @@
     {
       "from": "initial",
       "command": "init",
-      "timestamp": "2025-08-08T14:55:24.420Z",
+      "timestamp": "2025-08-10T16:31:25.692Z",
       "args": [
         {
           "workingDirectory": "d:\\code\\genie3-survey",
@@ -15,23 +15,67 @@
     {
       "from": "initialized",
       "command": "action",
-      "timestamp": "2025-08-08T14:58:27.968Z",
-      "args": [
-        "nuwa"
-      ]
-    },
-    {
-      "from": "role_activated_with_memory",
-      "command": "action",
-      "timestamp": "2025-08-08T15:01:08.511Z",
+      "timestamp": "2025-08-10T16:31:44.730Z",
       "args": [
         "prof-gen"
       ]
     },
     {
       "from": "role_activated_with_memory",
+      "command": "learn",
+      "timestamp": "2025-08-10T16:32:32.353Z",
+      "args": [
+        "@manual://marp"
+      ]
+    },
+    {
+      "from": "learn_error",
+      "command": "remember",
+      "timestamp": "2025-08-10T16:32:48.835Z",
+      "args": [
+        "prof-gen",
+        "## Marp Presentation Creation for Technical Papers\n\n### Core Marp Setup\n- **Installation**: VS Code Extension \"Marp for VS Code\" (recommended for development)\n- **CLI Alternative**: `npm install -g @marp-team/marp-cli` or `npx @marp-team/marp-cli@latest`\n- **File Structure**: Create `.md` files with `marp: true` in front-matter\n\n### Essential Syntax for Technical Papers\n```markdown\n---\nmarp: true\ntitle: Paper Title\ntheme: default  # or gaia, uncover\npaginate: true\nbackgroundColor: #fff\nauthor: Researcher Name\n---\n\n# Paper Title\n## Subtitle/Conference/Date\n\n---\n\n## Agenda\n1. Introduction & Motivation\n2. Technical Approach\n3. Experimental Results\n4. Conclusions & Future Work\n```\n\n### Advanced Layout Techniques for Technical Content\n\n#### Split Layouts for Diagrams + Explanations\n```markdown\n![bg left:40%](architecture-diagram.jpg)\n# Technical Architecture\n- Component A: Handles X\n- Component B: Processes Y\n- Integration: Z mechanism\n```\n\n#### Multi-Column for Comparisons\n```css\nsection {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  gap: 2rem;\n}\n```\n\n#### Math Formula Support\n```markdown\n$$\nf(x) = \\int_{-\\infty}^{\\infty} \\hat{f}(\\xi) e^{2 \\pi i \\xi x} d\\xi\n$$\n```\n\n### Export Options for Academic Use\n- **PDF**: `marp --pdf slide-deck.md` (best for sharing)\n- **HTML**: `marp slide-deck.md` (interactive, presenter mode)\n- **PPTX**: `marp --pptx slide-deck.md` (PowerPoint compatibility)\n\n### Technical Paper Slide Structure Best Practices\n1. **Title Slide**: Paper title, authors, venue, date\n2. **Problem Statement**: Clear motivation and challenges\n3. **Technical Contribution**: Architecture diagrams, algorithms\n4. **Experimental Setup**: Dataset, baselines, metrics\n5. **Results**: Tables, graphs, ablation studies\n6. **Conclusions**: Key insights and future work\n\n### Advanced Features for Research Presentations\n- **Speaker Notes**: `<!-- This is a speaker note -->`\n- **Fragmented Lists**: Bullet points appear incrementally\n- **Background Images**: `![bg](research-setup.jpg)` for context\n- **Code Highlighting**: Native syntax highlighting for algorithms\n- **Custom Themes**: CSS customization for institutional branding",
+        "--tags",
+        "marp presentation technical-papers slides markdown research"
+      ]
+    },
+    {
+      "from": "memory_saved",
+      "command": "remember",
+      "timestamp": "2025-08-10T16:33:11.960Z",
+      "args": [
+        "prof-gen",
+        "## Advanced Marp Layout Techniques for Technical Presentations\n\n### Slide Dimensions and Responsive Design\n```css\n/* Standard 16:9 format (default) */\nsection {\n  width: 1280px;\n  height: 720px;\n  padding: 40px;\n}\n\n/* Responsive typography for technical content */\nsection {\n  font-size: clamp(16px, 2.5vw, 28px);\n}\nh1 { font-size: clamp(24px, 4vw, 48px); }\nh2 { font-size: clamp(20px, 3vw, 36px); }\n```\n\n### Advanced Split Layouts for Technical Content\n```markdown\n<!-- Architecture diagrams with explanations -->\n![bg left:33%](system-architecture.jpg)\n# System Overview\nThe proposed architecture consists of three main components:\n- **Video Tokenizer**: Compresses visual input\n- **Dynamics Model**: Predicts next frame tokens  \n- **Action Model**: Learns discrete action space\n\n<!-- Results comparison -->\n![bg right:40%](results-chart.png)\n# Experimental Results\nOur method achieves:\n- 15% improvement in FVD score\n- 2x faster inference time\n- Better controllability metrics\n```\n\n### Multi-Column Layouts for Comparisons\n```css\n/* Three-column comparison for ablation studies */\nsection {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 1.5rem;\n}\n\n/* Two-column for method vs baseline */\n.comparison-layout {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  gap: 2rem;\n}\n```\n\n### Dashboard-Style Layout for Results\n```css\nsection {\n  display: grid;\n  grid-template-areas:\n    \"title title title\"\n    \"metric1 metric2 metric3\"\n    \"chart chart table\"\n    \"conclusion conclusion conclusion\";\n  grid-template-columns: 1fr 1fr 1fr;\n  grid-template-rows: 80px 120px 1fr 60px;\n  gap: 1rem;\n}\n```\n\n### Background Techniques for Technical Context\n```markdown\n<!-- Multiple background images for process flow -->\n![bg](step1.jpg)\n![bg](step2.jpg)  \n![bg](step3.jpg)\n\n# Training Pipeline Overview\n\n<!-- Gradient background for emphasis -->\n<!-- backgroundImage: \"linear-gradient(45deg, #667eea 0%, #764ba2 100%)\" -->\n# Key Contribution\n```\n\n### Content Alignment for Technical Precision\n```css\n/* Center-aligned for key insights */\n.center-emphasis {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  text-align: center;\n  height: 100%;\n}\n\n/* Left-aligned for detailed technical content */\n.technical-detail {\n  text-align: left;\n  padding: 2rem;\n}\n```\n\n### Custom Layout Classes for Research Presentations\n```css\n.algorithm-slide {\n  display: grid;\n  grid-template-columns: 1fr 400px;\n  gap: 2rem;\n}\n\n.results-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\n  gap: 1rem;\n}\n\n.timeline-slide {\n  position: relative;\n  padding-left: 3rem;\n}\n```\n\n### Image Size Control for Technical Diagrams\n```markdown\n![width:500px height:300px](architecture.jpg)  <!-- Exact dimensions -->\n![width:80%](results-table.png)                <!-- Relative sizing -->\n![bg cover](methodology.jpg)                   <!-- Full slide background -->\n![bg contain](equation.png)                    <!-- Fit within slide -->\n```\n\n### Header/Footer for Academic Branding\n```markdown\n---\nheader: 'Paper Title | Conference 2024'\nfooter: 'Author Name | Institution | Page'\n---\n```\n\n```css\nheader, footer {\n  position: absolute;\n  left: 50px;\n  right: 50px;\n  font-size: 14px;\n}\nheader {\n  top: 20px;\n  border-bottom: 1px solid #ddd;\n}\nfooter {\n  bottom: 20px;\n  text-align: center;\n}\n```",
+        "--tags",
+        "marp layout grid flexbox technical-slides css responsive-design"
+      ]
+    },
+    {
+      "from": "memory_saved",
+      "command": "remember",
+      "timestamp": "2025-08-10T16:33:27.996Z",
+      "args": [
+        "prof-gen",
+        "## Technical Paper Presentation Structure & Best Practices\n\n### Academic Slide Deck Template Structure\n1. **Title Slide**\n   - Paper title with clear, readable typography\n   - Author names and affiliations\n   - Conference/venue and date\n   - Institution logos (if appropriate)\n\n2. **Outline/Agenda** (Optional for short talks)\n   - Problem statement\n   - Technical approach\n   - Experimental validation\n   - Key contributions\n\n3. **Problem Statement & Motivation** (2-3 slides)\n   - Current limitations in the field\n   - Research gap identification\n   - Why this problem matters\n   - Clear problem formulation\n\n4. **Related Work** (1-2 slides)\n   - Key prior approaches\n   - Limitations of existing methods\n   - Positioning of current work\n\n5. **Technical Approach** (3-5 slides)\n   - High-level overview first\n   - Architecture diagrams with clear component labels\n   - Mathematical formulations (when necessary)\n   - Algorithm pseudocode (if applicable)\n   - Key innovations highlighted\n\n6. **Experimental Setup** (1-2 slides)\n   - Datasets used\n   - Baseline comparisons\n   - Evaluation metrics\n   - Implementation details\n\n7. **Results & Analysis** (3-4 slides)\n   - Quantitative results tables\n   - Ablation studies\n   - Qualitative examples\n   - Error analysis/failure cases\n\n8. **Conclusions & Future Work** (1-2 slides)\n   - Key contributions summarized\n   - Impact and implications\n   - Limitations acknowledged\n   - Future research directions\n\n9. **Thank You/Questions** (1 slide)\n   - Contact information\n   - Code/data availability\n   - Acknowledgments\n\n### Design Principles for Technical Content\n- **Clarity over complexity**: One main idea per slide\n- **Visual hierarchy**: Use font sizes and colors to guide attention\n- **Consistent styling**: Unified color scheme and typography\n- **High contrast**: Ensure readability in various lighting conditions\n- **Minimal text**: Use bullet points, not paragraphs\n- **Quality figures**: Vector graphics preferred, high DPI images\n- **Animation sparingly**: Only for revealing complex information step-by-step\n\n### Marp-Specific Technical Presentation Tips\n- Use `gaia` theme for professional academic look\n- Enable pagination for conference presentations\n- Include speaker notes for complex technical details\n- Export to PDF for final submission/sharing\n- Use consistent image sizing throughout\n- Leverage split layouts for architecture explanations\n- Employ grid layouts for comparison tables",
+        "--tags",
+        "academic-presentations conference-talks research-methodology slide-design"
+      ]
+    },
+    {
+      "from": "memory_saved",
+      "command": "remember",
+      "timestamp": "2025-08-10T16:37:20.425Z",
+      "args": [
+        "prof-gen",
+        "## Latest Marp Features & Advanced Capabilities (2024-2025)\n\n### Latest Version Updates (Marp Core v4)\n- **New Layout System**: Changed from `display: flex` to `display: block` for slide containers\n- **Improved Centering**: Uses modern CSS layout without Flexbox restrictions\n- **Floating Layout Support**: Better CSS layout features, including floating elements\n- **Baseline 2024 Browser Support**: Leverages latest browser capabilities\n- **View Transitions API**: New bespoke template with custom transition effects\n\n### Advanced CSS Theming & Customization\n```css\n/* Custom theme structure */\n/* @theme your-theme-name */\n\n@import 'default';  /* Import base theme */\n\nsection {\n  width: 1280px;\n  height: 720px;\n  font-size: 40px;\n  padding: 40px;\n  background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);\n}\n\n/* Responsive typography */\nsection { font-size: clamp(16px, 2.5vw, 28px); }\nh1 { font-size: clamp(24px, 4vw, 48px); }\nh2 { font-size: clamp(20px, 3vw, 36px); }\n```\n\n### Custom Transitions & Animations\n- **Declarative CSS Transitions**: Custom animation sets without JavaScript\n- **View Transitions API**: Modern browser transition effects\n- **Built-in Transitions**: 90% coverage for common needs\n- **Custom Registration**: CSS-based custom transition registration\n\n### Math Formula Support (Enhanced)\n```markdown\n<!-- Inline math -->\nRender inline math such as $ax^2+bc+c$.\n\n<!-- Block math -->\n$$\nI_{xx}=\\int\\int_Ry^2f(x,y)\\cdot{}dydx\n$$\n\n$$\nf(x) = \\int_{-\\infty}^\\infty \\hat f(\\xi)\\,e^{2 \\pi i \\xi x} \\,d\\xi\n$$\n```\n\n### Advanced Configuration Options\n```yaml\n# .marprc.yml configuration\ntheme: custom-theme\noutput: ./dist\npdf: true\nhtml: true\nallowLocalFiles: true\nwatch: true\nserver: true\n```\n\n```javascript\n// marp.config.js\nexport default {\n  inputDir: './slides',\n  output: './public',\n  theme: 'gaia',\n  themeSet: './themes',\n  math: 'katex',  // or 'mathjax'\n  minifyCSS: true,\n  allowLocalFiles: true\n}\n```\n\n### VS Code Integration Features\n- **Live Theme Reloading**: Automatic CSS updates during theme development\n- **GitHub Copilot Integration**: AI-assisted presentation export\n- **Custom Theme Registration**: Remote URLs and local file support\n- **Real-time Preview**: Live preview with instant updates\n\n### Advanced CLI Commands\n```bash\n# Watch mode with custom theme\nmarp -w --theme ./css/custom.scss presentation.md\n\n# Preview with live reload\nmarp presentation.md --theme custom.css --preview\n\n# Multiple format export\nmarp presentation.md --pdf --html --pptx\n\n# Server mode for presentation\nmarp -s ./slides-directory\n\n# Custom output with configuration\nmarp presentation.md -o output.html --config marp.config.js\n```\n\n### Fragmented Lists & Animation Control\n```markdown\n<!-- Appear one by one -->\n* Item 1\n* Item 2\n* Item 3\n\n<!-- Custom animation timing -->\n<!-- _transition: fade -->\n<!-- _animation: slide-in -->\n```\n\n### Advanced Directives Support\n```markdown\n---\nmarp: true\ntheme: custom\ntitle: \"Presentation Title\"\nauthor: \"Author Name\"\ndate: \"2025-01-01\"\npaginate: true\nfooter: \"Footer Text\"\nheader: \"Header Text\"\nbackgroundImage: url('bg.jpg')\nstyle: |\n  section {\n    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);\n  }\n---\n```\n\n### Image and Media Enhancements\n```markdown\n<!-- Advanced image sizing -->\n![width:500px height:300px](diagram.jpg)\n![bg cover](background.jpg)\n![bg contain](logo.png)\n![bg left:40%](side-image.jpg)\n\n<!-- Multiple backgrounds -->\n![bg](bg1.jpg)\n![bg](bg2.jpg)\n![bg](bg3.jpg)\n```\n\n### Integration Capabilities\n- **CI/CD Pipeline Integration**: Automated slide generation\n- **GitHub Actions Support**: Automated publishing workflows\n- **Docker Support**: Containerized slide generation\n- **Web Deployment**: Direct HTML hosting capabilities\n- **Version Control**: Git-friendly Markdown sources",
+        "--tags",
+        "marp-v4 transitions animations math-formulas configuration advanced-features"
+      ]
+    },
+    {
+      "from": "memory_saved",
       "command": "init",
-      "timestamp": "2025-08-08T15:01:14.477Z",
+      "timestamp": "2025-08-10T16:39:33.086Z",
       "args": [
         {
           "workingDirectory": "d:\\code\\genie3-survey",
@@ -42,7 +86,7 @@
     {
       "from": "initialized",
       "command": "action",
-      "timestamp": "2025-08-08T15:01:18.746Z",
+      "timestamp": "2025-08-10T16:39:36.396Z",
       "args": [
         "prof-gen"
       ]
@@ -50,14 +94,14 @@
     {
       "from": "role_activated_with_memory",
       "command": "remember",
-      "timestamp": "2025-08-08T15:02:34.461Z",
+      "timestamp": "2025-08-10T16:47:56.423Z",
       "args": [
         "prof-gen",
-        "**Genie: Generative Interactive Environments (2024) - Foundational Video World Model**\n\n## Core Innovation\n- First generative interactive environment trained unsupervised from unlabeled Internet videos\n- 11B parameter foundation world model enabling frame-by-frame controllable video generation\n- Trained on 200,000+ hours of Internet gaming videos without action or text annotations\n- Creates playable environments from text, images, sketches, or photographs\n\n## Architecture Components\n\n### 1. Spatiotemporal (ST) Transformer\n- Memory-efficient alternative to full attention - O(n) vs O(n²) scaling with frames\n- Interleaved spatial and temporal attention layers\n- Spatial layer: attends over H×W tokens within single frame\n- Temporal layer: attends over T×1×1 tokens across time (causal masked)\n- Single FFW after both spatial+temporal (not post-spatial FFW)\n\n### 2. Video Tokenizer (ST-ViViT)\n- VQ-VAE with ST-transformer encoder/decoder\n- Compresses T×H×W×C → T×D discrete tokens\n- Temporal-aware tokenization (vs spatial-only in prior work)\n- Each token z_t contains info from all previous frames x_1:t\n- 200M params, patch size 4, codebook 1024 codes\n\n### 3. Latent Action Model (LAM)\n- Learns 8 discrete latent actions unsupervised from video pairs\n- Encoder: takes frames x_1:t + x_t+1 → continuous latent actions\n- VQ-VAE objective with small vocabulary |A|=8 for human playability\n- Decoder: reconstructs x_t+1 from history + latent action (training only)\n- Actions must encode meaningful changes for successful reconstruction\n- 300M params, patch size 16, 8-code action vocabulary\n\n### 4. Dynamics Model\n- Decoder-only MaskGIT transformer predicting next frame tokens\n- Input: video tokens z_1:t-1 + stopgrad latent actions a_1:t-1\n- Additive embeddings for actions (not concatenation)\n- Random masking 0.5-1.0 during training\n- 10.1B params in final model\n\n## Training Strategy\n**Two-phase training:**\n1. Train video tokenizer independently\n2. Co-train LAM (on pixels) + dynamics model (on tokens)\n\n## Dataset Construction\n- **Platformers Dataset**: 6.8M videos (30k hours) from 55M initial clips\n- Keyword filtering for 2D platformer content\n- Quality classifier (ResNet18) trained on 10k hand-labeled videos\n- High-quality data > quantity: 10% curated data outperforms full dataset\n- **Robotics Dataset**: RT1 + simulation data (action-free treatment)\n\n## Scaling Results\n- Graceful scaling from 40M to 2.7B to 11B parameters\n- Batch size scaling also beneficial (128→256→448→512)\n- Final model: 942B training tokens, 256 TPUv5p\n\n## Key Technical Insights\n- **Pixel-input LAM > Token-input LAM**: Raw pixels preserve motion dynamics lost in tokenization\n- **ST-ViViT > C-ViViT**: More efficient spatiotemporal encoding than full attention\n- **Additive action embeddings**: Better controllability than concatenation\n- **Consistent latent semantics**: Same action has consistent meaning across different inputs\n\n## Emergent Capabilities\n- **Out-of-distribution generalization**: Works on text-to-image outputs, sketches, real photos\n- **Physics understanding**: Learns deformable objects, parallax effects\n- **Cross-domain transfer**: Robotics model learns arm control and object interactions\n- **Agent training**: LAM enables behavioral cloning in unseen RL environments\n\n## Performance Metrics\n- **Video fidelity**: Fréchet Video Distance (FVD)\n- **Controllability**: Δ_t PSNR comparing ground-truth vs random action generations\n- **Behavioral cloning**: Matches oracle performance with 200 expert samples\n\n## Limitations & Future Work\n- Limited to 16 frames memory (1.6s at 10 FPS)\n- ~1 FPS inference speed\n- Autoregressive hallucination issues\n- Potential for larger Internet video training",
+        "User preference: Do not use emojis in academic presentations. Keep content clean and professional without emoji decorations.",
         "--tags",
-        "genie world-model video-generation spatiotemporal-transformer latent-actions unsupervised-learning foundation-model interactive-environments"
+        "presentation-style academic-formatting user-preference"
       ]
     }
   ],
-  "lastUpdated": "2025-08-08T15:02:34.473Z"
+  "lastUpdated": "2025-08-10T16:47:56.428Z"
 }

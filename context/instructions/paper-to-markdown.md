@@ -10,17 +10,23 @@ Also, if you are given a URL, you can download the HTML content first and then c
 
 ## File Handling
 
-by default, save the markdown file and related resources in the `papers` directory, unless specified otherwise. 
+### The `paper-dir` directory
 
-### If you are given an html file
-- save the converted markdown file and name it as `paper-title-year.md`, where `paper-title` is the title of the paper in lowercase, with spaces replaced by hyphens, `year` is the publication year of the paper. 
+by default, save the markdown file and related resources in the `<workspace>/tmp/papers` directory (this dir is referred to as `paper-master-dir`), and create a subdir with the paper name (this is referred to as `paper-subdir`) . Note that the user can specify a different `paper-master-dir` or `paper-subdir` in the prompt, so pay attention to it.
+
+### If you are given a html file
+- save the converted markdown file and name it as `paper-content.md` in `paper-subdir`, no images.
 
 ### If you are given an html directory
-- save the converted markdown file subdir, name it as `paper-title-year`, where `paper-title` is the title of the paper in lowercase, with spaces replaced by hyphens, `year` is the publication year of the paper.
-- within the subdir, save the markdown file as `paper.md` and all images in an `images/` subdirectory, if you are using the utility script, then just point the script to the subdir, and it will handle the output filename and image organization automatically, just rename the markdown file to `paper.md` and DO NOT touch other generated files.
+- save the converted markdown file as `paper-content.md` in `paper-subdir`,and all images in a subdirectory, with whatever name you see fit, as long as the links are not broken (the given html may have its own naming convention, respect that).
+- if you are using the utility script, then just point the script to the `paper-subdir`, and it will handle the output filename and image organization automatically, just rename the markdown file to `paper-content.md` and DO NOT touch other generated files.
 
 ### If you are given a URL
-- download the HTML content to a temporary directory, such as `tmp/`, and then convert it to markdown, just like the above cases, give the utility script the downloaded html dir. For downloading HTML with utility script, use `--with-all` option to ensure all resources are downloaded.
+- download the HTML content to a temporary directory, such as `tmp/downloads`, and then convert it to markdown, just like the above cases, give the utility script the downloaded html dir. For downloading HTML with utility script, use `--with-images` option to download all images.
+
+### If you are given a PDF file
+
+- convert the PDF to markdown using `markitdown` directly, let it also export the images, and save the markdown file as `paper-content.md` in `paper-subdir`, with images in a subdirectory determined by the `markitdown` tool.
 
 ## Prerequisites
 
@@ -300,6 +306,254 @@ except Exception as e:
     print(f'Conversion failed: {e}')
 "
 ``` 
+
+## Converting Local PDFs to Markdown with Images
+
+For local PDF files, you can use `markitdown` to convert them directly to markdown format while preserving embedded images. This is particularly useful for academic papers that contain figures, diagrams, and tables.
+
+### Basic PDF Conversion
+
+**Command Line Interface:**
+```bash
+# Simple PDF to markdown conversion
+markitdown document.pdf -o output.md
+
+# With pixi
+pixi run markitdown document.pdf -o output.md
+
+# Convert and save to paper subdirectory
+markitdown research-paper.pdf -o tmp/papers/my-paper/paper-content.md
+```
+
+**PowerShell batch conversion:**
+```powershell
+# Convert all PDFs in a directory
+Get-ChildItem *.pdf | ForEach-Object { 
+    markitdown $_.Name -o ($_.BaseName + ".md") 
+}
+```
+
+### Python API for PDF Conversion
+
+**Basic PDF conversion:**
+```python
+from markitdown import MarkItDown
+
+# Initialize converter
+md = MarkItDown()
+
+# Convert PDF file
+result = md.convert("research-paper.pdf")
+
+# Save to paper subdirectory
+import os
+os.makedirs("tmp/papers/my-paper", exist_ok=True)
+with open("tmp/papers/my-paper/paper-content.md", "w", encoding="utf-8") as f:
+    f.write(result.text_content)
+```
+
+### Enhanced PDF Conversion with Image Descriptions
+
+For better image handling, integrate with Large Language Models to generate descriptions:
+
+```python
+from markitdown import MarkItDown
+from openai import OpenAI
+
+# Configure with LLM for image descriptions
+client = OpenAI()  # Requires OPENAI_API_KEY environment variable
+md = MarkItDown(llm_client=client, llm_model="gpt-4o")
+
+# Convert PDF with enhanced image processing
+result = md.convert("academic-paper.pdf")
+with open("tmp/papers/enhanced-paper/paper-content.md", "w", encoding="utf-8") as f:
+    f.write(result.text_content)
+```
+
+### Azure Document Intelligence Integration
+
+For complex academic papers with advanced layouts:
+
+```python
+from markitdown import MarkItDown
+
+# Use Azure Document Intelligence (requires Azure endpoint)
+md = MarkItDown(docintel_endpoint="<your_azure_endpoint>")
+result = md.convert("complex-paper.pdf")
+```
+
+**CLI with Azure:**
+```bash
+markitdown document.pdf -o output.md -d -e "<azure_endpoint>"
+```
+
+### Manual Image Extraction Workflow
+
+For PDFs where precise image handling is critical, combine `markitdown` with manual image extraction:
+
+```python
+import fitz  # PyMuPDF
+from markitdown import MarkItDown
+import os
+
+def convert_pdf_with_manual_images(pdf_path, output_dir):
+    """Convert PDF to markdown and extract images separately."""
+    
+    # Create output directory structure
+    os.makedirs(output_dir, exist_ok=True)
+    images_dir = os.path.join(output_dir, "images")
+    os.makedirs(images_dir, exist_ok=True)
+    
+    # Extract images with PyMuPDF
+    pdf_doc = fitz.open(pdf_path)
+    image_refs = []
+    
+    for page_num in range(len(pdf_doc)):
+        page = pdf_doc.load_page(page_num)
+        image_list = page.get_images()
+        
+        for img_index, img in enumerate(image_list):
+            xref = img[0]
+            pix = fitz.Pixmap(pdf_doc, xref)
+            
+            if pix.n - pix.alpha < 4:  # GRAY or RGB
+                img_filename = f"page_{page_num+1}_img_{img_index+1}.png"
+                img_path = os.path.join(images_dir, img_filename)
+                pix.save(img_path)
+                image_refs.append(f"images/{img_filename}")
+            
+            pix = None
+    
+    pdf_doc.close()
+    
+    # Convert PDF to markdown with markitdown
+    md = MarkItDown()
+    result = md.convert(pdf_path)
+    
+    # Save markdown as paper-content.md
+    markdown_path = os.path.join(output_dir, "paper-content.md")
+    with open(markdown_path, "w", encoding="utf-8") as f:
+        f.write(result.text_content)
+        
+        # Append extracted images section
+        if image_refs:
+            f.write("\n\n## Extracted Images\n\n")
+            for img_ref in image_refs:
+                f.write(f"![Image]({img_ref})\n\n")
+    
+    return markdown_path, image_refs
+
+# Usage example
+pdf_file = "research-paper.pdf"
+output_directory = "tmp/papers/research-paper"
+convert_pdf_with_manual_images(pdf_file, output_directory)
+```
+
+### Batch PDF Processing
+
+**Process multiple PDFs with automatic organization:**
+```python
+import os
+from markitdown import MarkItDown
+from pathlib import Path
+
+def batch_convert_pdfs(input_dir, paper_master_dir="tmp/papers"):
+    """Convert all PDFs in directory to organized paper subdirectories."""
+    
+    md = MarkItDown()
+    
+    for pdf_file in Path(input_dir).glob("*.pdf"):
+        try:
+            # Create paper subdirectory
+            paper_name = pdf_file.stem
+            paper_subdir = os.path.join(paper_master_dir, paper_name)
+            os.makedirs(paper_subdir, exist_ok=True)
+            
+            # Convert PDF
+            result = md.convert(str(pdf_file))
+            
+            # Save as paper-content.md
+            output_path = os.path.join(paper_subdir, "paper-content.md")
+            with open(output_path, "w", encoding="utf-8") as f:
+                f.write(result.text_content)
+            
+            print(f"Converted {pdf_file.name} to {output_path}")
+            
+        except Exception as e:
+            print(f"Error converting {pdf_file.name}: {e}")
+
+# Usage
+batch_convert_pdfs("path/to/pdf/files")
+```
+
+### PDF Conversion Best Practices
+
+1. **File Organization**: Always save converted files as `paper-content.md` in the paper subdirectory
+2. **Image Handling**: For critical images, consider manual extraction or LLM-enhanced conversion
+3. **Quality Check**: Review converted markdown for formatting issues, especially with complex layouts
+4. **Backup Original**: Keep the original PDF file in the paper subdirectory for reference
+
+### Error Handling for PDF Conversion
+
+```python
+from markitdown import MarkItDown
+import os
+
+def safe_pdf_convert(pdf_path, output_dir):
+    """Safely convert PDF with comprehensive error handling."""
+    
+    try:
+        # Validate input
+        if not os.path.exists(pdf_path):
+            raise FileNotFoundError(f"PDF file not found: {pdf_path}")
+        
+        if not pdf_path.lower().endswith('.pdf'):
+            raise ValueError("Input file must be a PDF")
+        
+        # Create output directory
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Convert PDF
+        md = MarkItDown()
+        result = md.convert(pdf_path)
+        
+        if not result.text_content.strip():
+            print(f"Warning: No text content extracted from {pdf_path}")
+            return None
+        
+        # Save result
+        output_path = os.path.join(output_dir, "paper-content.md")
+        with open(output_path, "w", encoding="utf-8") as f:
+            f.write(result.text_content)
+        
+        print(f"Successfully converted {pdf_path} to {output_path}")
+        return output_path
+        
+    except Exception as e:
+        print(f"Error converting PDF {pdf_path}: {e}")
+        return None
+
+# Usage
+pdf_file = "research-paper.pdf"
+output_dir = "tmp/papers/research-paper"
+safe_pdf_convert(pdf_file, output_dir)
+```
+
+### Requirements for PDF Processing
+
+Ensure you have the necessary dependencies installed:
+
+```bash
+# For basic PDF support
+pip install markitdown[all]
+
+# For enhanced image extraction (optional)
+pip install PyMuPDF  # fitz
+
+# With pixi
+pixi add --pypi markitdown[all]
+pixi add --pypi PyMuPDF
+```
 
 ## How to Get HTML Online
 

@@ -4,8 +4,8 @@
   "metadata": {
     "version": "2.0.0",
     "description": "project 级资源注册表",
-    "createdAt": "2025-08-08T15:01:14.482Z",
-    "updatedAt": "2025-08-08T15:01:14.487Z",
+    "createdAt": "2025-08-10T16:39:33.090Z",
+    "updatedAt": "2025-08-10T16:39:33.093Z",
     "resourceCount": 3
   },
   "resources": [
@@ -17,9 +17,9 @@
       "description": "执行模式，定义具体的行为模式",
       "reference": "@project://.promptx/resource/role/prof-gen/execution/academic-research-workflow.execution.md",
       "metadata": {
-        "createdAt": "2025-08-08T15:01:14.484Z",
-        "updatedAt": "2025-08-08T15:01:14.484Z",
-        "scannedAt": "2025-08-08T15:01:14.484Z",
+        "createdAt": "2025-08-10T16:39:33.092Z",
+        "updatedAt": "2025-08-10T16:39:33.092Z",
+        "scannedAt": "2025-08-10T16:39:33.092Z",
         "path": "role/prof-gen/execution/academic-research-workflow.execution.md"
       }
     },
@@ -31,9 +31,9 @@
       "description": "专业角色，提供特定领域的专业能力",
       "reference": "@project://.promptx/resource/role/prof-gen/prof-gen.role.md",
       "metadata": {
-        "createdAt": "2025-08-08T15:01:14.486Z",
-        "updatedAt": "2025-08-08T15:01:14.486Z",
-        "scannedAt": "2025-08-08T15:01:14.486Z",
+        "createdAt": "2025-08-10T16:39:33.092Z",
+        "updatedAt": "2025-08-10T16:39:33.092Z",
+        "scannedAt": "2025-08-10T16:39:33.092Z",
         "path": "role/prof-gen/prof-gen.role.md"
       }
     },
@@ -45,9 +45,9 @@
       "description": "思维模式，指导AI的思考方式",
       "reference": "@project://.promptx/resource/role/prof-gen/thought/academic-thinking.thought.md",
       "metadata": {
-        "createdAt": "2025-08-08T15:01:14.487Z",
-        "updatedAt": "2025-08-08T15:01:14.487Z",
-        "scannedAt": "2025-08-08T15:01:14.487Z",
+        "createdAt": "2025-08-10T16:39:33.093Z",
+        "updatedAt": "2025-08-10T16:39:33.093Z",
+        "scannedAt": "2025-08-10T16:39:33.093Z",
         "path": "role/prof-gen/thought/academic-thinking.thought.md"
       }
     }

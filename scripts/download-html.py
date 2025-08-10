@@ -206,13 +206,24 @@ class HTMLDownloader:
             return False
             
         content_type: str = response.headers.get("content-type", "").lower()
+        url = response.url.lower()
         
         if self.with_all:
             # Download all resources except HTML documents
-            return not content_type.startswith("text/html")
+            # Also skip downloads of URLs that are clearly not local resources
+            if content_type.startswith("text/html"):
+                return False
+            # Skip external CDN and API calls that might not be resources
+            if any(domain in url for domain in ['googleapis.com', 'gstatic.com', 'jsdelivr.net', 'cdnjs.cloudflare.com']):
+                return False
+            return True
         elif self.with_images:
-            # Download only images
-            return content_type.startswith("image/")
+            # Download images and any file that looks like an image based on extension
+            if content_type.startswith("image/"):
+                return True
+            # Also check file extension for images that might not have correct content-type
+            if any(ext in url for ext in ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp']):
+                return True
         
         return False
     
@@ -276,6 +287,9 @@ class HTMLDownloader:
                 # Get the rendered HTML content
                 html_content = await page.content()
                 
+                # Fix HTML content for offline viewing
+                html_content = self._fix_html_for_offline(html_content, resources_dir)
+                
                 # Save the HTML file
                 with open(html_file, "w", encoding="utf-8") as f:
                     f.write(html_content)
@@ -287,6 +301,77 @@ class HTMLDownloader:
                     
             finally:
                 await browser.close()
+    
+    def _fix_html_for_offline(self, html_content: str, resources_dir: Optional[Path]) -> str:
+        """Fix HTML content for offline viewing by updating URLs and base tags.
+        
+        Args:
+            html_content: Original HTML content
+            resources_dir: Directory where resources are saved
+            
+        Returns:
+            Fixed HTML content
+        """
+        import re
+        from urllib.parse import urlparse
+        
+        # Remove or update base tag that breaks relative URLs
+        base_tag_pattern = r'<base\s+href="[^"]*"[^>]*>'
+        html_content = re.sub(base_tag_pattern, '', html_content, flags=re.IGNORECASE)
+        
+        if not resources_dir:
+            return html_content
+            
+        domain = urlparse(self.url).netloc
+        resources_dir_name = resources_dir.name
+        
+        # Create a mapping of downloaded resources
+        downloaded_files = {}
+        if resources_dir.exists():
+            for file_path in resources_dir.rglob('*'):
+                if file_path.is_file():
+                    filename = file_path.name
+                    downloaded_files[filename] = f"{resources_dir_name}/{filename}"
+        
+        # Fix relative image sources and other relative URLs
+        def fix_relative_url(match):
+            tag = match.group(1)  # img, link, script, etc.
+            attr = match.group(2)  # src, href
+            quote = match.group(3)  # " or '
+            url = match.group(4)
+            
+            # Skip absolute URLs
+            if url.startswith(('http://', 'https://', '//', 'data:', 'javascript:', 'mailto:')):
+                return match.group(0)
+            
+            # Handle root-relative URLs (starting with /)
+            if url.startswith('/'):
+                return match.group(0)
+            
+            # For relative URLs, try to find the actual downloaded file
+            # Extract just the filename from the URL path
+            filename = url.split('/')[-1]
+            if filename in downloaded_files:
+                fixed_url = downloaded_files[filename]
+                return f'<{tag} {attr}={quote}{fixed_url}{quote}'
+            
+            # If not found, use the original relative path with resources directory
+            fixed_url = f"{resources_dir_name}/{url}"
+            return f'<{tag} {attr}={quote}{fixed_url}{quote}'
+        
+        # Pattern to match src and href attributes with relative URLs
+        # More comprehensive pattern to handle various HTML structures
+        patterns = [
+            r'<(img)\s+[^>]*?(src)=(["\'])([^"\']*?)\3[^>]*>',
+            r'<(link)\s+[^>]*?(href)=(["\'])([^"\']*?)\3[^>]*>',
+            r'<(script)\s+[^>]*?(src)=(["\'])([^"\']*?)\3[^>]*>',
+            r'<(a)\s+[^>]*?(href)=(["\'])([^"\']*?)\3[^>]*>'
+        ]
+        
+        for pattern in patterns:
+            html_content = re.sub(pattern, fix_relative_url, html_content, flags=re.IGNORECASE | re.DOTALL)
+        
+        return html_content
 
 
 def main() -> None:

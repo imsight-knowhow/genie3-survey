@@ -1,85 +1,483 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <memory>
-  <item id="mem_1754665354469_zj2p12hdo" time="2025/08/08 23:02">
+  <item id="mem_1754843568837_nmaokjwn2" time="2025/08/11 00:32">
     <content>
-      **Genie: Generative Interactive Environments (2024) - Foundational Video World Model**
+      ## Marp Presentation Creation for Technical Papers
     
-      ## Core Innovation
-      - First generative interactive environment trained unsupervised from unlabeled Internet videos
-      - 11B parameter foundation world model enabling frame-by-frame controllable video generation
-      - Trained on 200,000+ hours of Internet gaming videos without action or text annotations
-      - Creates playable environments from text, images, sketches, or photographs
+      ### Core Marp Setup
+      - **Installation**: VS Code Extension &quot;Marp for VS Code&quot; (recommended for development)
+      - **CLI Alternative**: `npm install -g @marp-team/marp-cli` or `npx @marp-team/marp-cli@latest`
+      - **File Structure**: Create `.md` files with `marp: true` in front-matter
     
-      ## Architecture Components
+      ### Essential Syntax for Technical Papers
+      ```markdown
+      ---
+      marp: true
+      title: Paper Title
+      theme: default  # or gaia, uncover
+      paginate: true
+      backgroundColor: #fff
+      author: Researcher Name
+      ---
     
-      ### 1. Spatiotemporal (ST) Transformer
-      - Memory-efficient alternative to full attention - O(n) vs O(n²) scaling with frames
-      - Interleaved spatial and temporal attention layers
-      - Spatial layer: attends over H×W tokens within single frame
-      - Temporal layer: attends over T×1×1 tokens across time (causal masked)
-      - Single FFW after both spatial+temporal (not post-spatial FFW)
+      # Paper Title
+      ## Subtitle/Conference/Date
     
-      ### 2. Video Tokenizer (ST-ViViT)
-      - VQ-VAE with ST-transformer encoder/decoder
-      - Compresses T×H×W×C → T×D discrete tokens
-      - Temporal-aware tokenization (vs spatial-only in prior work)
-      - Each token z_t contains info from all previous frames x_1:t
-      - 200M params, patch size 4, codebook 1024 codes
+      ---
     
-      ### 3. Latent Action Model (LAM)
-      - Learns 8 discrete latent actions unsupervised from video pairs
-      - Encoder: takes frames x_1:t + x_t+1 → continuous latent actions
-      - VQ-VAE objective with small vocabulary |A|=8 for human playability
-      - Decoder: reconstructs x_t+1 from history + latent action (training only)
-      - Actions must encode meaningful changes for successful reconstruction
-      - 300M params, patch size 16, 8-code action vocabulary
+      ## Agenda
+      1. Introduction &amp; Motivation
+      2. Technical Approach
+      3. Experimental Results
+      4. Conclusions &amp; Future Work
+      ```
     
-      ### 4. Dynamics Model
-      - Decoder-only MaskGIT transformer predicting next frame tokens
-      - Input: video tokens z_1:t-1 + stopgrad latent actions a_1:t-1
-      - Additive embeddings for actions (not concatenation)
-      - Random masking 0.5-1.0 during training
-      - 10.1B params in final model
+      ### Advanced Layout Techniques for Technical Content
     
-      ## Training Strategy
-      **Two-phase training:**
-      1. Train video tokenizer independently
-      2. Co-train LAM (on pixels) + dynamics model (on tokens)
+      #### Split Layouts for Diagrams + Explanations
+      ```markdown
+      ![bg left:40%](architecture-diagram.jpg)
+      # Technical Architecture
+      - Component A: Handles X
+      - Component B: Processes Y
+      - Integration: Z mechanism
+      ```
     
-      ## Dataset Construction
-      - **Platformers Dataset**: 6.8M videos (30k hours) from 55M initial clips
-      - Keyword filtering for 2D platformer content
-      - Quality classifier (ResNet18) trained on 10k hand-labeled videos
-      - High-quality data &gt; quantity: 10% curated data outperforms full dataset
-      - **Robotics Dataset**: RT1 + simulation data (action-free treatment)
+      #### Multi-Column for Comparisons
+      ```css
+      section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      }
+      ```
     
-      ## Scaling Results
-      - Graceful scaling from 40M to 2.7B to 11B parameters
-      - Batch size scaling also beneficial (128→256→448→512)
-      - Final model: 942B training tokens, 256 TPUv5p
+      #### Math Formula Support
+      ```markdown
+      $
+      f(x) = \int_{-\infty}^{\infty} \hat{f}(\xi) e^{2 \pi i \xi x} d\xi
+      $
+      ```
     
-      ## Key Technical Insights
-      - **Pixel-input LAM &gt; Token-input LAM**: Raw pixels preserve motion dynamics lost in tokenization
-      - **ST-ViViT &gt; C-ViViT**: More efficient spatiotemporal encoding than full attention
-      - **Additive action embeddings**: Better controllability than concatenation
-      - **Consistent latent semantics**: Same action has consistent meaning across different inputs
+      ### Export Options for Academic Use
+      - **PDF**: `marp --pdf slide-deck.md` (best for sharing)
+      - **HTML**: `marp slide-deck.md` (interactive, presenter mode)
+      - **PPTX**: `marp --pptx slide-deck.md` (PowerPoint compatibility)
     
-      ## Emergent Capabilities
-      - **Out-of-distribution generalization**: Works on text-to-image outputs, sketches, real photos
-      - **Physics understanding**: Learns deformable objects, parallax effects
-      - **Cross-domain transfer**: Robotics model learns arm control and object interactions
-      - **Agent training**: LAM enables behavioral cloning in unseen RL environments
+      ### Technical Paper Slide Structure Best Practices
+      1. **Title Slide**: Paper title, authors, venue, date
+      2. **Problem Statement**: Clear motivation and challenges
+      3. **Technical Contribution**: Architecture diagrams, algorithms
+      4. **Experimental Setup**: Dataset, baselines, metrics
+      5. **Results**: Tables, graphs, ablation studies
+      6. **Conclusions**: Key insights and future work
     
-      ## Performance Metrics
-      - **Video fidelity**: Fréchet Video Distance (FVD)
-      - **Controllability**: Δ_t PSNR comparing ground-truth vs random action generations
-      - **Behavioral cloning**: Matches oracle performance with 200 expert samples
+      ### Advanced Features for Research Presentations
+      - **Speaker Notes**: `&lt;!-- This is a speaker note --&gt;`
+      - **Fragmented Lists**: Bullet points appear incrementally
+      - **Background Images**: `![bg](research-setup.jpg)` for context
+      - **Code Highlighting**: Native syntax highlighting for algorithms
+      - **Custom Themes**: CSS customization for institutional branding
+    </content>
+    <tags>#其他</tags>
+  </item>
+  <item id="mem_1754843591962_c63lady8e" time="2025/08/11 00:33">
+    <content>
+      ## Advanced Marp Layout Techniques for Technical Presentations
     
-      ## Limitations &amp; Future Work
-      - Limited to 16 frames memory (1.6s at 10 FPS)
-      - ~1 FPS inference speed
-      - Autoregressive hallucination issues
-      - Potential for larger Internet video training
+      ### Slide Dimensions and Responsive Design
+      ```css
+      /* Standard 16:9 format (default) */
+      section {
+      width: 1280px;
+      height: 720px;
+      padding: 40px;
+      }
+    
+      /* Responsive typography for technical content */
+      section {
+      font-size: clamp(16px, 2.5vw, 28px);
+      }
+      h1 { font-size: clamp(24px, 4vw, 48px); }
+      h2 { font-size: clamp(20px, 3vw, 36px); }
+      ```
+    
+      ### Advanced Split Layouts for Technical Content
+      ```markdown
+      &lt;!-- Architecture diagrams with explanations --&gt;
+      ![bg left:33%](system-architecture.jpg)
+      # System Overview
+      The proposed architecture consists of three main components:
+      - **Video Tokenizer**: Compresses visual input
+      - **Dynamics Model**: Predicts next frame tokens
+      - **Action Model**: Learns discrete action space
+    
+      &lt;!-- Results comparison --&gt;
+      ![bg right:40%](results-chart.png)
+      # Experimental Results
+      Our method achieves:
+      - 15% improvement in FVD score
+      - 2x faster inference time
+      - Better controllability metrics
+      ```
+    
+      ### Multi-Column Layouts for Comparisons
+      ```css
+      /* Three-column comparison for ablation studies */
+      section {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      }
+    
+      /* Two-column for method vs baseline */
+      .comparison-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      }
+      ```
+    
+      ### Dashboard-Style Layout for Results
+      ```css
+      section {
+      display: grid;
+      grid-template-areas:
+      &quot;title title title&quot;
+      &quot;metric1 metric2 metric3&quot;
+      &quot;chart chart table&quot;
+      &quot;conclusion conclusion conclusion&quot;;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 80px 120px 1fr 60px;
+      gap: 1rem;
+      }
+      ```
+    
+      ### Background Techniques for Technical Context
+      ```markdown
+      &lt;!-- Multiple background images for process flow --&gt;
+      ![bg](step1.jpg)
+      ![bg](step2.jpg)
+      ![bg](step3.jpg)
+    
+      # Training Pipeline Overview
+    
+      &lt;!-- Gradient background for emphasis --&gt;
+      &lt;!-- backgroundImage: &quot;linear-gradient(45deg, #667eea 0%, #764ba2 100%)&quot; --&gt;
+      # Key Contribution
+      ```
+    
+      ### Content Alignment for Technical Precision
+      ```css
+      /* Center-aligned for key insights */
+      .center-emphasis {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100%;
+      }
+    
+      /* Left-aligned for detailed technical content */
+      .technical-detail {
+      text-align: left;
+      padding: 2rem;
+      }
+      ```
+    
+      ### Custom Layout Classes for Research Presentations
+      ```css
+      .algorithm-slide {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 2rem;
+      }
+    
+      .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      }
+    
+      .timeline-slide {
+      position: relative;
+      padding-left: 3rem;
+      }
+      ```
+    
+      ### Image Size Control for Technical Diagrams
+      ```markdown
+      ![width:500px height:300px](architecture.jpg)  &lt;!-- Exact dimensions --&gt;
+      ![width:80%](results-table.png)                &lt;!-- Relative sizing --&gt;
+      ![bg cover](methodology.jpg)                   &lt;!-- Full slide background --&gt;
+      ![bg contain](equation.png)                    &lt;!-- Fit within slide --&gt;
+      ```
+    
+      ### Header/Footer for Academic Branding
+      ```markdown
+      ---
+      header: &#x27;Paper Title | Conference 2024&#x27;
+      footer: &#x27;Author Name | Institution | Page&#x27;
+      ---
+      ```
+    
+      ```css
+      header, footer {
+      position: absolute;
+      left: 50px;
+      right: 50px;
+      font-size: 14px;
+      }
+      header {
+      top: 20px;
+      border-bottom: 1px solid #ddd;
+      }
+      footer {
+      bottom: 20px;
+      text-align: center;
+      }
+      ```
+    </content>
+    <tags>#其他</tags>
+  </item>
+  <item id="mem_1754843607998_98sm6z84l" time="2025/08/11 00:33">
+    <content>
+      ## Technical Paper Presentation Structure &amp; Best Practices
+    
+      ### Academic Slide Deck Template Structure
+      1. **Title Slide**
+      - Paper title with clear, readable typography
+      - Author names and affiliations
+      - Conference/venue and date
+      - Institution logos (if appropriate)
+    
+      2. **Outline/Agenda** (Optional for short talks)
+      - Problem statement
+      - Technical approach
+      - Experimental validation
+      - Key contributions
+    
+      3. **Problem Statement &amp; Motivation** (2-3 slides)
+      - Current limitations in the field
+      - Research gap identification
+      - Why this problem matters
+      - Clear problem formulation
+    
+      4. **Related Work** (1-2 slides)
+      - Key prior approaches
+      - Limitations of existing methods
+      - Positioning of current work
+    
+      5. **Technical Approach** (3-5 slides)
+      - High-level overview first
+      - Architecture diagrams with clear component labels
+      - Mathematical formulations (when necessary)
+      - Algorithm pseudocode (if applicable)
+      - Key innovations highlighted
+    
+      6. **Experimental Setup** (1-2 slides)
+      - Datasets used
+      - Baseline comparisons
+      - Evaluation metrics
+      - Implementation details
+    
+      7. **Results &amp; Analysis** (3-4 slides)
+      - Quantitative results tables
+      - Ablation studies
+      - Qualitative examples
+      - Error analysis/failure cases
+    
+      8. **Conclusions &amp; Future Work** (1-2 slides)
+      - Key contributions summarized
+      - Impact and implications
+      - Limitations acknowledged
+      - Future research directions
+    
+      9. **Thank You/Questions** (1 slide)
+      - Contact information
+      - Code/data availability
+      - Acknowledgments
+    
+      ### Design Principles for Technical Content
+      - **Clarity over complexity**: One main idea per slide
+      - **Visual hierarchy**: Use font sizes and colors to guide attention
+      - **Consistent styling**: Unified color scheme and typography
+      - **High contrast**: Ensure readability in various lighting conditions
+      - **Minimal text**: Use bullet points, not paragraphs
+      - **Quality figures**: Vector graphics preferred, high DPI images
+      - **Animation sparingly**: Only for revealing complex information step-by-step
+    
+      ### Marp-Specific Technical Presentation Tips
+      - Use `gaia` theme for professional academic look
+      - Enable pagination for conference presentations
+      - Include speaker notes for complex technical details
+      - Export to PDF for final submission/sharing
+      - Use consistent image sizing throughout
+      - Leverage split layouts for architecture explanations
+      - Employ grid layouts for comparison tables
+    </content>
+    <tags>#其他</tags>
+  </item>
+  <item id="mem_1754843840427_yjp1istyk" time="2025/08/11 00:37">
+    <content>
+      ## Latest Marp Features &amp; Advanced Capabilities (2024-2025)
+    
+      ### Latest Version Updates (Marp Core v4)
+      - **New Layout System**: Changed from `display: flex` to `display: block` for slide containers
+      - **Improved Centering**: Uses modern CSS layout without Flexbox restrictions
+      - **Floating Layout Support**: Better CSS layout features, including floating elements
+      - **Baseline 2024 Browser Support**: Leverages latest browser capabilities
+      - **View Transitions API**: New bespoke template with custom transition effects
+    
+      ### Advanced CSS Theming &amp; Customization
+      ```css
+      /* Custom theme structure */
+      /* @theme your-theme-name */
+    
+      @import &#x27;default&#x27;;  /* Import base theme */
+    
+      section {
+      width: 1280px;
+      height: 720px;
+      font-size: 40px;
+      padding: 40px;
+      background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+      }
+    
+      /* Responsive typography */
+      section { font-size: clamp(16px, 2.5vw, 28px); }
+      h1 { font-size: clamp(24px, 4vw, 48px); }
+      h2 { font-size: clamp(20px, 3vw, 36px); }
+      ```
+    
+      ### Custom Transitions &amp; Animations
+      - **Declarative CSS Transitions**: Custom animation sets without JavaScript
+      - **View Transitions API**: Modern browser transition effects
+      - **Built-in Transitions**: 90% coverage for common needs
+      - **Custom Registration**: CSS-based custom transition registration
+    
+      ### Math Formula Support (Enhanced)
+      ```markdown
+      &lt;!-- Inline math --&gt;
+      Render inline math such as $ax^2+bc+c$.
+    
+      &lt;!-- Block math --&gt;
+      $
+      I_{xx}=\int\int_Ry^2f(x,y)\cdot{}dydx
+      $
+    
+      $
+      f(x) = \int_{-\infty}^\infty \hat f(\xi)\,e^{2 \pi i \xi x} \,d\xi
+      $
+      ```
+    
+      ### Advanced Configuration Options
+      ```yaml
+      # .marprc.yml configuration
+      theme: custom-theme
+      output: ./dist
+      pdf: true
+      html: true
+      allowLocalFiles: true
+      watch: true
+      server: true
+      ```
+    
+      ```javascript
+      // marp.config.js
+      export default {
+      inputDir: &#x27;./slides&#x27;,
+      output: &#x27;./public&#x27;,
+      theme: &#x27;gaia&#x27;,
+      themeSet: &#x27;./themes&#x27;,
+      math: &#x27;katex&#x27;,  // or &#x27;mathjax&#x27;
+      minifyCSS: true,
+      allowLocalFiles: true
+      }
+      ```
+    
+      ### VS Code Integration Features
+      - **Live Theme Reloading**: Automatic CSS updates during theme development
+      - **GitHub Copilot Integration**: AI-assisted presentation export
+      - **Custom Theme Registration**: Remote URLs and local file support
+      - **Real-time Preview**: Live preview with instant updates
+    
+      ### Advanced CLI Commands
+      ```bash
+      # Watch mode with custom theme
+      marp -w --theme ./css/custom.scss presentation.md
+    
+      # Preview with live reload
+      marp presentation.md --theme custom.css --preview
+    
+      # Multiple format export
+      marp presentation.md --pdf --html --pptx
+    
+      # Server mode for presentation
+      marp -s ./slides-directory
+    
+      # Custom output with configuration
+      marp presentation.md -o output.html --config marp.config.js
+      ```
+    
+      ### Fragmented Lists &amp; Animation Control
+      ```markdown
+      &lt;!-- Appear one by one --&gt;
+      * Item 1
+      * Item 2
+      * Item 3
+    
+      &lt;!-- Custom animation timing --&gt;
+      &lt;!-- _transition: fade --&gt;
+      &lt;!-- _animation: slide-in --&gt;
+      ```
+    
+      ### Advanced Directives Support
+      ```markdown
+      ---
+      marp: true
+      theme: custom
+      title: &quot;Presentation Title&quot;
+      author: &quot;Author Name&quot;
+      date: &quot;2025-01-01&quot;
+      paginate: true
+      footer: &quot;Footer Text&quot;
+      header: &quot;Header Text&quot;
+      backgroundImage: url(&#x27;bg.jpg&#x27;)
+      style: |
+      section {
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      }
+      ---
+      ```
+    
+      ### Image and Media Enhancements
+      ```markdown
+      &lt;!-- Advanced image sizing --&gt;
+      ![width:500px height:300px](diagram.jpg)
+      ![bg cover](background.jpg)
+      ![bg contain](logo.png)
+      ![bg left:40%](side-image.jpg)
+    
+      &lt;!-- Multiple backgrounds --&gt;
+      ![bg](bg1.jpg)
+      ![bg](bg2.jpg)
+      ![bg](bg3.jpg)
+      ```
+    
+      ### Integration Capabilities
+      - **CI/CD Pipeline Integration**: Automated slide generation
+      - **GitHub Actions Support**: Automated publishing workflows
+      - **Docker Support**: Containerized slide generation
+      - **Web Deployment**: Direct HTML hosting capabilities
+      - **Version Control**: Git-friendly Markdown sources
+    </content>
+    <tags>#其他</tags>
+  </item>
+  <item id="mem_1754844476425_mqxwhjpz7" time="2025/08/11 00:47">
+    <content>
+      User preference: Do not use emojis in academic presentations. Keep content clean and professional without emoji decorations.
     </content>
     <tags>#其他</tags>
   </item>
