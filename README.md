@@ -52,6 +52,12 @@ Prior works by DeepMind related to Genie 3
 
 Directly related to Genie 3, where user can interact with a generated environment, shown as video.
 
+#### [Matrix-3D: Omnidirectional Explorable 3D World Generation](https://github.com/SkyworkAI/Matrix-3D/blob/main/asset/report.pdf)
+- **Venue**: Technical Report, 2025
+- **Github Page**: [SkyworkAI/Matrix-3D](https://github.com/SkyworkAI/Matrix-3D)
+- **Project Page**: [matrix-3d.github.io](https://matrix-3d.github.io/)
+- **Summary**: Matrix-3D generates wide-coverage, omnidirectional explorable 3D worlds from a single image or text. It first produces trajectory-guided panoramic videos via a diffusion model, then lifts them to 3D with either a fast feed-forward panoramic reconstruction model or an optimization-based 3DGS pipeline. It supports fine-grained trajectory control and 360° free exploration, and introduces the Matrix-Pano dataset for training.
+
 #### [Back to the Features: DINO as a Foundation for Video World Models](https://arxiv.org/abs/2507.19468)
 - **Venue**: arXiv, 2025
 - **Summary**: DINO-world presents a powerful generalist video world model trained to predict future frames in the latent space of DINOv2. By leveraging a pre-trained image encoder and training a future predictor on large-scale uncurated video datasets, DINO-world learns temporal dynamics of diverse scenes from driving to simulated environments. The model demonstrates strong performance on video prediction benchmarks and physics understanding, and can be fine-tuned for action-conditioned planning. This approach significantly reduces computational requirements compared to pixel-space models while maintaining effectiveness for world modeling tasks.
